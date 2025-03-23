@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import FeaturedServices from "@/components/FeaturedServices";
 import { categories } from "@/lib/data";
-import { Clock, ArrowRight, Users, Refresh } from "lucide-react";
+import { Clock, ArrowRight, Users, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -68,7 +68,7 @@ const Index: React.FC = () => {
               
               <div className="flex flex-col items-center text-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
                 <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Refresh className="h-7 w-7 text-primary" />
+                  <RefreshCw className="h-7 w-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-medium mb-2">Troque Serviços</h3>
                 <p className="text-muted-foreground">
