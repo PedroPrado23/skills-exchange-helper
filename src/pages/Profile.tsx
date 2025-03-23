@@ -7,8 +7,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { users, getServicesByUser, getCategoryById } from "@/lib/data";
 import { Clock, Mail, Phone, Plus, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Profile: React.FC = () => {
+  // Flag para indicar se o usuário está autenticado (em uma aplicação real, isso viria de um contexto de autenticação)
+  const isAuthenticated = false;
+  
+  // Se o usuário não estiver autenticado, mostrar tela de login/cadastro
+  if (!isAuthenticated) {
+    return (
+      <Layout className="pt-24">
+        <div className="max-w-md mx-auto text-center p-8">
+          <h1 className="text-3xl font-bold mb-4">Acesse sua conta</h1>
+          <p className="text-muted-foreground mb-8">
+            Faça login ou crie uma conta para acessar seu perfil e começar a trocar serviços.
+          </p>
+          <div className="space-y-4">
+            <Button className="w-full" asChild>
+              <Link to="/login">Entrar</Link>
+            </Button>
+            <Button variant="outline" className="w-full" asChild>
+              <Link to="/signup">Criar Conta</Link>
+            </Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+  
   // Mock user - in a real app, this would come from authentication
   const user = users[0];
   const userServices = getServicesByUser(user.id);
