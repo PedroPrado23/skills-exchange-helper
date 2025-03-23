@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import ServiceCard from "@/components/ServiceCard";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,13 @@ import { Clock, Mail, Phone, Plus, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Profile: React.FC = () => {
-  // Flag para indicar se o usuário está autenticado (em uma aplicação real, isso viria de um contexto de autenticação)
-  const isAuthenticated = false;
+  // Verificar autenticação usando localStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated") === "true";
+    setIsAuthenticated(authStatus);
+  }, []);
   
   // Se o usuário não estiver autenticado, mostrar tela de login/cadastro
   if (!isAuthenticated) {

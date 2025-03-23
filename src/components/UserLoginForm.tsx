@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
@@ -19,9 +18,6 @@ import {
 import { Eye, EyeOff } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string().min(3, {
-    message: "O nome deve ter pelo menos 3 caracteres.",
-  }),
   email: z.string().email({
     message: "Por favor, insira um endereço de email válido.",
   }),
@@ -32,7 +28,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const UserSignUpForm: React.FC = () => {
+const UserLoginForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -40,7 +36,6 @@ const UserSignUpForm: React.FC = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -51,24 +46,17 @@ const UserSignUpForm: React.FC = () => {
     
     try {
       // Em uma aplicação real, aqui você faria a integração com o backend
-      console.log("Dados do formulário:", data);
+      console.log("Dados de login:", data);
       
-      // Para fins de demonstração, vamos armazenar os dados do usuário no localStorage
-      // Em uma aplicação real, você usaria um backend para isso
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-      users.push(data);
-      localStorage.setItem("users", JSON.stringify(users));
-      
-      // Definir usuário como autenticado
-      localStorage.setItem("isAuthenticated", "true");
-      
-      // Simular um atraso de cadastro
+      // Simular um atraso de autenticação
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast.success("Conta criada com sucesso!");
+      // Simulação de login bem-sucedido
+      localStorage.setItem("isAuthenticated", "true");
+      toast.success("Login realizado com sucesso!");
       navigate("/profile");
     } catch (error) {
-      toast.error("Erro ao criar conta. Tente novamente.");
+      toast.error("Erro ao fazer login. Verifique suas credenciais.");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -78,20 +66,6 @@ const UserSignUpForm: React.FC = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome</FormLabel>
-              <FormControl>
-                <Input placeholder="Seu nome completo" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
         <FormField
           control={form.control}
           name="email"
@@ -115,7 +89,7 @@ const UserSignUpForm: React.FC = () => {
               <FormControl>
                 <div className="relative">
                   <Input
-                    placeholder="Crie uma senha segura"
+                    placeholder="Sua senha"
                     type={showPassword ? "text" : "password"}
                     {...field}
                   />
@@ -136,11 +110,11 @@ const UserSignUpForm: React.FC = () => {
         />
         
         <Button type="submit" className="w-full mt-6" disabled={isLoading}>
-          {isLoading ? "Criando conta..." : "Criar conta"}
+          {isLoading ? "Entrando..." : "Entrar"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default UserSignUpForm;
+export default UserLoginForm;
